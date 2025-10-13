@@ -1,18 +1,24 @@
 IsotopeLogLineLine = {
 	U233:{
-        Fission:false,
+        Fission:{
+            x1:Qd("1e-0.6"),y1:Qd("1e+3.725"),x2:Qd("1e+2.1461"),y2:Qd("1e+1.28")
+        },
         Absorption:{
             x1:Qd("1e-10"),y1:Qd("1e+3"),x2:Qd("1e-0.1"),y2:Qd("1e-1")
         },
     },
     U234:{
-        Fission:false,
+        Fission:{
+            x1:Qd("1e-0.6"),y1:Qd("1e-0.1737"),x2:Qd("1e+2.1461"),y2:Qd("1e+1.3")
+        },
         Absorption:{
             x1:Qd("1e-9.5"),y1:Qd("1e+3"),x2:Qd("1e-2"),y2:Qd("0")
         },
     },
     U235:{
-        Fission:false,
+        Fission:{
+            x1:Qd("1e-2"),y1:Qd("1e+0.8"),x2:Qd("1e-5.5"),y2:Qd("1e+1.6")
+        },
         Absorption:{
             x1:Qd("1e-9"),y1:Qd("1e+2.8"),x2:Qd("1e-1.7"),y2:Qd("0")
         },
@@ -22,7 +28,7 @@ IsotopeLogLineLine = {
             x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
         },
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-11"),y1:Qd("1e+2.4"),x2:Qd("1e-2"),y2:Qd("0")
         },
     },
     U237:{
