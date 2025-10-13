@@ -1,7 +1,95 @@
-<head>
+<!DOCTYPE html>
+<html lang="en">
 
-</head>
-<body>
-<script src="decimal.js"></script>
-<script src="IsotopeLogLineLine.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>CANDU</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <div id="ContainerMain">
+  <div id="Calandria">
+    <div class="Water" id="CoreContainer">
+      <div id="CtrlRodCont">
+      
+      </div>
+      <div id="FuelLayerCont">
+        
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<div class="Neutron" id="neutrongraphic"><span class="Math particle">n<sub>fast</sub></span></div>
+
+<div class="CtrlRod" id="ctrlBase">
+  <div class="MeterNotch"></div>
+</div>
+<div class="FuelLayer" id="FuelLayerBase">
+  <div class="MeterNotchHorizontal"></div>
+</div>
+<div class="FuelCylinder NU" id="FuelBase"></div>
+
+<div id="info"></div>
+
+<div id="ControlPanel">
+  <div id="sizeNotice" class="ila">
+    <h2>Text is small and the screen is big. Use Ctrl + and Ctrl - to make this easier to read.</h2>
+    <button type="button" onclick="document.getElementById('sizeNotice').remove();">ok!</button>
+  </div>
+  <div id="floodpanel" class="ila">
+    <div><h4 class="pni lhp">Flood Panel</h4> <button id="FPhide" class="pni" type="button" onclick="contentHider('FP')">x</button></div>
+    <div id="FPcontent">
+    <div>
+      <button type="button" onclick="Core.className = 'Water'; CoreDescriptor();">Diprotium Monoxide</button>
+      <button type="button" onclick="Core.className = 'HeavyWater'; CoreDescriptor();">Dideuterium Monoxide</button>
+    </div>
+    <div id="FloodPanelDisplay"><span style="color:red;">Fluid</span>: Diprotium Monoxide</div>
+    </div>
+  </div>
+  <div class="ila">
+    <div><h4 class="lhp pni">General Information Panel</h4> <button id="GIPhide" class="pni" type="button" onclick="contentHider('GIP')">x</button></div>
+    <div id="GIPcontent">
+      <div id="MeanBundleHeat"><span style="color:red;">Mean Bundle Heat</span>: 0 Units</div>
+      <div id="MeanAdjusterRodInsertion"><span style="color:red;">Mean Adjuster Rod Insertion</span>: 1</div>
+      <div id="JoulesLastFrame"><span style="color:red;">Joules Last Frame</span>: 0</div>
+      <div id="NeutronsSimulated"><span style="color:red;">Neutrons Simulated</span>: 0</div>
+      <div id="LastMS"><span style="color:red;">Last MS</span>: 0</div>
+      <span style="font-size:8px;">* The simulation does not currently vent heat.</span><br><br>
+      <form style="font-size:12px;" onsubmit="return false;">
+        <label for="ins">Bulk Change Adjuster Rods</label>
+        <input type="number" id="AdjustTo" min="0" max="1" step="0.01" name="ins" value="1"/><br>
+        <input type="button" id="BulkAdjuster" value="Set ALL adjuster rods"/>
+        <input type="button" id="BulkAdjust1" value="Set all 1"/>
+      </form>
+    </div>
+  </div>
+  <div id="ng" class="ila">
+    <div><h4 class="lhp pni">Guides</h4> <button id="NGhide" class="pni" type="button" onclick="contentHider('NG')">x</button></div>
+    <div id="NGcontent">
+      <ul>
+        <li><span class="Math">n<sub>fast</sub></span> : typically &#8805; 1 MeV</li>
+        <li><span class="Math">n<sub>epi</sub></span> : 0.5 to 10 KeV </li>
+        <li><span class="Math">n<sub>th</sub></span> : 0.025 or less eV</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ila">
+    <div><h5 class="lhp pni">Creator Notes</h5> <button id="CNhide" class="pni" type="button" onclick="contentHider('CN')">Ex</button></div>
+    <div id="CNcontent" style="display: none;">
+    <p class="fup lpp plp"><span style="font-size:18px;">O</span>riginally, I had planned to model a full reactor. It was at this point that I realized I am not a thermodynamicist; So, this is really only the calandria. <sub>9/5/25</sub></p>
+      <p class="fup lpp plp"><span style="font-size:18px;">O</span>kay. So actually looking at diagrams which represent slices of the reactor actually is not the best thing to model the reactor after and I have a lot of reworking to do. Because everything up to this point has actually only been a slice. Awesome. <sub>9/24/25</sub></p>
+      <p class="fup lpp plp"><span style="font-size:18px;">I</span> give up. behold: arbitrary reactor 9000. this is NOT a CANDU. This is a monster, an amalgam of a seriously messed up RBMK and two CANDUS placed on top of eachother. <sub>9/30/25</sub></p>
+      </div>
+  </div>
+</div>
+    <script src='./decimal.js'></script>
+<script src='./victor.min.js'></script>
+<script  src="./script.js"></script>
+
+  </body>
+  
+</html>
