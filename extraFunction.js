@@ -2,41 +2,88 @@ function Qd(str) {
   return new Decimal(str);
 }
 
-const PoundFactor = Qd("2.205");
-const InchFactor = Qd("2.54");
 const pi = Qd(Math.PI);
-const Barn = Qd("1e-24"); 
 const e = Qd(Math.E);
+const Barn = Qd("1e-24"); 
 const Avogadro = Qd("6.02214076e23"); // atoms/mol
 
-const Mega = Qd("1e6");
-const One = Qd(1);
-const Zero = Qd(0);
-const NOne = Qd(-1);
+const Mega = Qd("1e+6");
+const Kilo = Qd("1e+3");
+const Hecto = Qd("1e+2");
 
-// should be causious with these cuz of the log.
+const KiloToPoundFactor = Qd("2.204622");
+const InchToCMFactor = Qd("2.54");
 
-function Micro(N) {
-    return Qd(N).div(Qd("1e+3")).log("10");
+const One = Qd("1");
+const Zero = Qd("0");
+const NOne = Qd("-1");
+
+// its fine if some of these go unused so long as it keeps a naming convention
+
+// GENERAL USE BASE CONVERSION FUNCTIONS //
+
+function ToMicro(N) {
+  return N.mul(Mega);
 }
 
-function Milli(N) {
-    return Qd(N).div(Qd("1e6")).log("10");
+function ToMilli(N) {
+  return N.mul(Kilo);
 }
 
-function Reg(N) {
-    return Qd(N).log(10);
+function ToCenti(N) {
+  return N.mul(Hecto);
 }
 
+function ToHecto(N) {
+  return N.div(Hecto);
+}
 
-// all below functions do not use decimal.js
+function ToKilo(N) {
+  return N.div(Kilo);
+}
+
+function ToMega(N) {
+  return N.div(Mega);
+}
+
+// specific usecases in LogLineLine
+
+function MicroToLog(Micro) {
+  return ToMega(Micro).log("10");
+}
+
+function MilliToLog(Milli) {
+  return ToKilo(Milli).log("10");
+}
+
+// generics
+
+function ToLog(N) {
+  return N.log("10");
+}
+
+function CentiToBase(Centi) {
+  return ToHecto(Centi);
+}
+
+// GENERAL USE UNIT CONVERSION FUNCTIONS //
+
+function InchToCM(Inches) {
+  return Inches.mul(InchToCMFactor);
+}
+
+function CMToInches(CM) {
+  return CM.div(InchToCMFactor);
+}
+
+// all below functions do not use decimal.js, best to ignore them until i get to working on the main reactor handler.
 
 function InchToCM(Inches){
-  return Inches*2.54
+  return Inches*2.54;
 }
 
 function CMtoInch(CM){
-  return CM/2.54
+  return CM/2.54;
 }
 
 function decayByInches(ev, inches) {
@@ -44,7 +91,7 @@ function decayByInches(ev, inches) {
   // a neutron typically loses half of its electron volts per inch of deuterium oxide
 }
 
-function MeVtoeV(x) { // arbitrary
+function MeVtoeV(x) { // arbitrary, due for removal
   return x * 1e6;
 }
 

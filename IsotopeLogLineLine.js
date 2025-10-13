@@ -30,7 +30,7 @@ IsotopeLogLineLine = {
     },
     U236:{
         Fission:{
-            x1:JAEAX1,y1:Micro("259.4"),x2:JAEAX2,y2:Reg("1.611")
+            x1:JAEAX1,y1:MicroToLog("259.4"),x2:JAEAX2,y2:ToLog("1.611")
         },
         Absorption:{
             x1:Qd("1e-11"),y1:Qd("1e+2.4"),x2:Qd("1e-2"),y2:Qd("0")
