@@ -1,7 +1,18 @@
+// sources: JAEA nuclear data center, Los Alamos National Labratory
+const JAEAX1 = Qd("1e-0.6");
+const JAEAX2 = Qd("1e+2.1461");
+
+function Micro() {
+    
+}
+function Milli() {
+
+}
+
 IsotopeLogLineLine = {
 	U233:{
         Fission:{
-            x1:Qd("1e-0.6"),y1:Qd("1e+3.725"),x2:Qd("1e+2.1461"),y2:Qd("1e+1.28")
+            x1:JAEAX1,y1:Qd("1e+3.725"),x2:JAEAX2,y2:Qd("1e+1.28")
         },
         Absorption:{
             x1:Qd("1e-10"),y1:Qd("1e+3"),x2:Qd("1e-0.1"),y2:Qd("1e-1")
@@ -9,7 +20,7 @@ IsotopeLogLineLine = {
     },
     U234:{
         Fission:{
-            x1:Qd("1e-0.6"),y1:Qd("1e-0.1737"),x2:Qd("1e+2.1461"),y2:Qd("1e+1.3")
+            x1:JAEAX1,y1:Qd("1e-0.1737"),x2:JAEAX2,y2:Qd("1e+1.3")
         },
         Absorption:{
             x1:Qd("1e-9.5"),y1:Qd("1e+3"),x2:Qd("1e-2"),y2:Qd("0")
@@ -25,7 +36,7 @@ IsotopeLogLineLine = {
     },
     U236:{
         Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:JAEAX1,y1:Qd("0"),x2:JAEAX2,y2:Qd("0")
         },
         Absorption:{
             x1:Qd("1e-11"),y1:Qd("1e+2.4"),x2:Qd("1e-2"),y2:Qd("0")
