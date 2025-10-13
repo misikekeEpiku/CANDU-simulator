@@ -1,16 +1,7 @@
 // sources: JAEA nuclear data center, Los Alamos National Labratory
+
 const JAEAX1 = Qd("1e-0.6");
 const JAEAX2 = Qd("1e+2.1461");
-
-function Micro(N) {
-    return Qd(N).div(Qd("1e+3")).log("10");
-}
-function Milli(N) {
-    return Qd(N).div(Qd("1e6")).log("10");
-}
-function Reg(N) {
-    return Qd(N).log(10);
-}
 
 IsotopeLogLineLine = {
 	U233:{

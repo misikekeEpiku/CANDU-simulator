@@ -15,14 +15,6 @@ bulk control rod managing
 
 // important constants
 
-function Qd(str) {
-  return new Decimal(str);
-}
-
-const PoundFactor = Qd("2.205");
-const InchFactor = Qd("2.54");
-const pi = Qd(Math.PI);
-
 // STARTUP VARIABLES //
 
 const Fuel = "NaturalUranium";
@@ -72,15 +64,6 @@ const FuelLayerSeparation = coreHeight/FuelLayers - (AdjusterRodWidth/2);
 const FuelCylinderHeightCM = (FuelCylinderLength/DPCM); // cm
 const FuelCylinderLengthCM = (FuelCylinderDiameter/DPCM); // cm
 const FuelCylinderArea = (+pi) * Math.pow(FuelCylinderLengthCM/2, 2) * FuelCylinderHeightCM;
-
-const Barn = Qd("1e-24"); 
-const e = Qd(Math.E);
-const Avogadro = Qd("6.02214076e23"); // atoms/mol
-
-const Mega = Qd("1e6")
-const One = Qd(1)
-const Zero = Qd(0)
-const NOne = Qd(-1)
 
 function AtomDensity(MaterialDensity_g_per_cm3, MolarMass_g_per_mol) {
   return MaterialDensity_g_per_cm3.mul(Avogadro).div(MolarMass_g_per_mol);
@@ -1497,11 +1480,11 @@ function GeneralInformationPanelUpdater() {
   NeutronsSimulated.innerHTML = C.Finalize();
   ELastMS.innerHTML = D.Finalize();
   
-  delete A;
-  delete B;
-  delete BC;
-  delete C;
-  delete D;
+  A = null;
+  B = null;
+  BC = null;
+  C = null;
+  D = null;
 }
 
 GeneralInformationPanelUpdater();
@@ -1617,24 +1600,6 @@ class NeutronParticle {
   }
 }
 
-function InchToCM(Inches){
-  return Inches*2.54
-}
-function CMtoInch(CM){
-  return CM/2.54
-}
-
-function decayByInches(ev, inches) {
-  return ev / Math.pow(2, inches);
-  // a neutron typically loses half of its electron volts per inch of deuterium oxide
-}
-function MeVtoeV(x) {
-  return x * 1e6;
-}
-function roundTo(x, n) {
-  const factor = Math.pow(10, n);
-  return Math.round(x * factor) / factor;
-}
 function BottomRight(Element) {
   const rect = Element.getBoundingClientRect();
   return {x:rect.right, y:rect.bottom}
@@ -1933,7 +1898,7 @@ function MainCalculations() {
         qa.Np239 = sz;
         qa.Pu239 = sz;
         qa.SatanicWasteProducts = {}
-        delete sz;
+        sz = null;
       }
       // 1000 total 
       // 900 U238
@@ -2020,7 +1985,7 @@ function HandleReactor() {
         if (Element == OtherElement) {continue;}
         var ThisNeutron = new Neutron();
         var ElectronVolts = ThisNeutron.ElectronVolts;
-        delete ThisNeutron;
+        ThisNeutron = null;
         const ISC = CheckElementsInSameColumn(Element, OtherElement);
         ISCChecls++;
         
