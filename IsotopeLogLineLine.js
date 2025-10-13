@@ -46,9 +46,7 @@ IsotopeLogLineLine = {
         },
     },
     U237:{
-        Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
-        },
+        Fission:false, // not enough documentation 
         Absorption:{
             x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
         },
