@@ -1,38 +1,98 @@
 IsotopeLogLineLine = {
 	U233:{
-
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     U234:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     U235:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     U236:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     U237:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     U238:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     U239:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     U240:{
-          
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     Np239:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     Np240:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     Pu239:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
     Pu240:{
-        
+        Fission:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
+        Absorption:{
+            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+        },
     },
 };
