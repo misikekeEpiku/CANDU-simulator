@@ -4,12 +4,14 @@ const Isotopes = {
     MolarMass: Qd("233.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
+    Fuel: true,
   },
   U234: {
     AtomicMass: Qd(234),
     MolarMass: Qd("234.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
+    Fuel: true,
   },
   U235: {
     AtomicMass: Qd(238),
@@ -21,6 +23,7 @@ const Isotopes = {
     NeutronReleaseFission: ()=>{return 2 + Extra(0.45)},
     Barns: (eV)=>{return Qd("1")},
     IllegalProduct: true,
+    Fuel: true,
   },
   U236: {
     AtomicMass: Qd(236),
@@ -28,12 +31,15 @@ const Isotopes = {
     Electrons: Qd(92),
     IllegalProduct: true,
     NucleiDensity: Qd("2.2e17"), 
+    IllegalProduct: true,
+    Fuel: true,
   },
   U237: {
     AtomicMass: Qd(237),
     MolarMass: Qd("237.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
+    Fuel: true,
   },
   U238: {
     AtomicMass: Qd("238"), // int mass for neutron determining fission products
@@ -43,40 +49,52 @@ const Isotopes = {
     NucleiDensity: Qd("1.16e17"), 
     FissionJoules: Qd("3.18e-11"),
     NeutronReleaseFission: ()=>{return NYield(2.07)},
-    FissionCrossSection: QuickSection(100, 4.46, 2), // returns a function.
+    FissionCrossSection: LogLineLineCrossSection(), // returns a function.
     AbsorptionCrossSection: ()=>{},
     IllegalProduct: true, 
+    Fuel: true,
   },
   U239: {
     AtomicMass: Qd(239),
-    MolarMass: Qd("234.04"),
+    MolarMass: Qd("239.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
+    Fuel: true,
   },
   Np239: {
     AtomicMass: Qd(239),
+    MolarMass: Qd("239.05"),
     Electrons: Qd(93),
     IllegalProduct: true,
+    Fuel: true,
   },
   Np240: {
     AtomicMass: Qd(240),
+    MolarMass: Qd("240.05"),
     Electrons: Qd(93),
     IllegalProduct: true,
+    Fuel: true,
   },
   Pu239: {
     AtomicMass: Qd(239),
+    MolarMass: Qd("239.05"),
     Electrons: Qd(94),
     IllegalProduct: true,
+    Fuel: true,
   },
   Pu240: {
     AtomicMass: Qd(240),
+    MolarMass: Qd("240.05"),
     Electrons: Qd(94),
     IllegalProduct: true,
+    Fuel: true,
   },
   Pu241: {
     AtomicMass: Qd(241),
+    MolarMass: Qd("241.05"),
     Electrons: Qd(94),
     IllegalProduct: true,
+    Fuel: true, // arbitrary category
   },
   Ge76: {
     AtomicMass: Qd(75),
@@ -833,4 +851,28 @@ const Isotopes = {
     Electrons: Qd(64),
     IllegalProduct: false,
   },
+};
+
+const isolen = Object.keys(Isotopes);
+
+for (var i = 0; i <= isolen.length; i++) {
+  const Name = isolen[i];
+  const Isotope = Isotopes[Name];
+  const ElementRef = PeriodicTable.elements[+Isotope.Electrons];
+  const _sym = ElementRef.symbol+"-"+(+Isotope.AtomicMass);
+  const __sym = ElementRef.symbol+(+Isotope.AtomicMass);
+  Isotope.ElementName = ElementRef.name;
+  Isotope.Symbol = _sym;
+  Isotope.MolarMass = Isotope.MolarMass ?? Isotope.AtomicMass.add(Qd(ElementRef.atomic_mass).mod(One));
+  Isotope.Fuel = Isotope.Fuel ?? false;
+  Isotope.IllegalProduct = Isotope.IllegalProduct ?? false;
+
+  const Focus = IsotopeLogLineLine[__sym]
+  const Fis = Focus.Fission;
+  const Abs = Focus.Absorption;
+  
+  if (Fis) {
+    Isotope.FissionCrossSection = LogLineLineCrossSection(Fis.x1, Fis.y1, Fis.x2, Fis.y2, Zero);
+  }
+
 }

@@ -4,7 +4,7 @@
 const JAEAX1 = Qd("1e-0.6");
 const JAEAX2 = Qd("1e+2.1461");
 
-IsotopeLogLineLine = {
+const IsotopeLogLineLine = {
 	U233:{
         Fission:{
             x1:JAEAX1,y1:Qd("1e+3.725"),x2:JAEAX2,y2:Qd("1e+1.28")
