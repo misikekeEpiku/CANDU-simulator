@@ -104,6 +104,8 @@ IsotopeLogLineLine = {
         Fission:false,
         Absorption:false,
     },
+    // there are more plutonium isotopes i am not accounting for because they are unlikely
+    // i may want to add them later.
     Pu239:{
         Fission:{
             x1:JAEAX1,y1:ToLog("747.4"),x2:JAEAX2,y2:ToLog("2.334")
