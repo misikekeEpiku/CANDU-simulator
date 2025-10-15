@@ -56,11 +56,15 @@ function MilliToLog(Milli) {
   return ToKilo(Milli).log("10");
 }
 
-// generics
-
 function ToLog(N) {
   return N.log("10");
 }
+
+function KiloToLog(Kilo) { // i am absolutely baffeled this has use
+  return ToMilli(Kilo).log("10");
+}
+
+// generics
 
 function CentiToBase(Centi) {
   return ToHecto(Centi);

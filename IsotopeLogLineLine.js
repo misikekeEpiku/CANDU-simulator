@@ -1,4 +1,5 @@
 // sources: JAEA nuclear data center, Los Alamos National Labratory
+// JAEA does not have all the fission data for the more unlikely isotopes that LANL does have.
 
 const JAEAX1 = Qd("1e-0.6");
 const JAEAX2 = Qd("1e+2.1461");
@@ -39,63 +40,100 @@ IsotopeLogLineLine = {
     U237:{
         Fission:false, // not enough documentation 
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-9"),y1:Qd("1e+4"),x2:Qd("1e-2"),y2:Qd("0")
         },
     },
     U238:{
         Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:JAEAX1,y1:MicroToLog("16.8"),x2:JAEAX2,y2:ToLog("1.136")
         },
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-10"),y1:Qd("1e+1.7"),x2:Qd("1e-6.5"),y2:Qd("0")
         },
     },
     U239:{
-        Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
-        },
+        Fission:false, // JAEA has no data. this can only absorb or decay to become something different.
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-11"),y1:Qd("1e+3"),x2:Qd("1e-0.5"),y2:Qd("1e-1")
         },
     },
     U240:{
         Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:JAEAX1,y1:MicroToLog("323"),x2:JAEAX2,y2:MilliToLog("83")
         },
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-11"),y1:Qd("1e+3"),x2:Qd("1e-1"),y2:Qd("1e-1")
         },
+    },
+    U241:{
+        Fission:false, // no data
+        Absorption:{
+            x1:Qd("1e-11"),y1:Qd("1e+4.3"),x2:Qd("0"),y2:Qd("1e-1")
+        },
+    },
+    // Np-234 to Np-238 are outrageously unlikely and will not be filled out presently.
+    Np234:{
+        Fission:false,
+        Absorption:false,
+    },
+    Np235:{
+        Fission:false,
+        Absorption:false,
+    },
+    Np236:{
+        Fission:false,
+        Absorption:false,
+    },
+    Np237:{
+        Fission:false,
+        Absorption:false,
+    },
+    Np238:{
+        Fission:false,
+        Absorption:false,
     },
     Np239:{
         Fission:{
             x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
         },
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-11"),y1:Qd("1e+3.3"),x2:Qd("1e-0.3"),y2:Qd("1e-0.7")
         },
     },
-    Np240:{
-        Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
-        },
-        Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
-        },
+    Np240:{ // effectively no data
+        Fission:false,
+        Absorption:false,
     },
     Pu239:{
         Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:JAEAX1,y1:ToLog("747.4"),x2:JAEAX2,y2:ToLog("2.334")
         },
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-11"),y1:Qd("1e+4.05"),x2:Qd("1e-1"),y2:Qd("1e-1")
         },
     },
     Pu240:{
         Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:JAEAX1,y1:MicroToLog("36"),x2:JAEAX2,y2:ToLog("2")
         },
         Absorption:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:Qd("1e-11"),y1:Qd("1e+4.1"),x2:Qd("1e-1"),y2:Qd("0")
+        },
+    },
+    Pu241:{
+        Fission:{
+            x1:JAEAX1,y1:KiloToLog("1.016"),x2:JAEAX2,y2:ToLog("2.26")
+        },
+        Absorption:{
+            x1:Qd("1e-11"),y1:Qd("1e+4.35"),x2:Qd("1e-1.5"),y2:Qd("1e-0.25")
+        },
+    },
+    Pu242:{
+        Fission:{
+            x1:JAEAX1,y1:MilliToLog("2.5"),x2:JAEAX2,y2:ToLog("2")
+        },
+        Absorption:{
+            x1:Qd("1e-11"),y1:Qd("1e+3"),x2:Qd("0"),y2:Qd("1e-1")
         },
     },
 };
