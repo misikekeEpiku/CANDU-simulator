@@ -104,3 +104,9 @@ function roundTo(x, n) {
   return Math.round(x * factor) / factor;
 }
 
+function Extra(Chance) {
+  if (Math.random()<Chance) {
+    return 1;
+  }
+  return 0;
+}
