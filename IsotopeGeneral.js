@@ -1,16 +1,19 @@
 const Isotopes = {
   U233: {
     AtomicMass: Qd(233),
+    MolarMass: Qd("233.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
   },
   U234: {
     AtomicMass: Qd(234),
+    MolarMass: Qd("234.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
   },
   U235: {
     AtomicMass: Qd(238),
+    MolarMass: Qd("235.04"),
     Electrons: Qd(92),
     Density: Qd("19.09"),
     NucleiDensity: Qd("1.8e17"), 
@@ -21,35 +24,32 @@ const Isotopes = {
   },
   U236: {
     AtomicMass: Qd(236),
+    MolarMass: Qd("236.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
     NucleiDensity: Qd("2.2e17"), 
   },
   U237: {
     AtomicMass: Qd(237),
+    MolarMass: Qd("237.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
   },
   U238: {
     AtomicMass: Qd("238"), // int mass for neutron determining fission products
-    MolarMass: Qd("238.05"), // actual mass for other arbitrary uses
+    MolarMass: Qd("238.04"), // actual mass for other arbitrary uses
     Electrons: Qd(92),
     Density: Qd("19.1"),
     NucleiDensity: Qd("1.16e17"), 
     FissionJoules: Qd("3.18e-11"),
-    NeutronReleaseFission: ()=>{return 2 + Extra(0.07)},
+    NeutronReleaseFission: ()=>{return NYield(2.07)},
     FissionCrossSection: QuickSection(100, 4.46, 2), // returns a function.
     AbsorptionCrossSection: ()=>{},
-    // another cross section exists which reflects the probability
-    // that a neutron is reflected but i do not care about that right now
     IllegalProduct: true, 
-
-    // Qd() is utilizing a library that has much higher floating point precision
-    // QuickSection is a legacy name from before i realized there are more types of neutron cross sections
-    // QuickSection also applies an old placeholder formula
   },
   U239: {
     AtomicMass: Qd(239),
+    MolarMass: Qd("234.04"),
     Electrons: Qd(92),
     IllegalProduct: true,
   },

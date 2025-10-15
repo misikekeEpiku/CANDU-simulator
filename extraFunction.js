@@ -110,3 +110,7 @@ function Extra(Chance) {
   }
   return 0;
 }
+
+function NYield(Neutrons) {
+  return Extra(Neutrons % 1) + Math.floor(Neutrons)
+}
