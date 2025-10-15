@@ -1,16 +1,16 @@
 // sources: JAEA nuclear data center, Los Alamos National Labratory
 // JAEA does not have all the fission data for the more unlikely isotopes that LANL does have.
 
-const JAEAX1 = Qd("1e-0.6");
+const JAEAX1 = ToLog("0.0256");
 const JAEAX2 = Qd("1e+2.1461");
 
 const IsotopeLogLineLine = {
 	U233:{
         Fission:{
-            x1:JAEAX1,y1:Qd("1e+3.725"),x2:JAEAX2,y2:Qd("1e+1.28")
+            x1:JAEAX1,y1:ToLog("531.3"),x2:JAEAX2,y2:ToLog("2.364")
         },
         Absorption:{
-            x1:Qd("1e-10"),y1:Qd("1e+3"),x2:Qd("1e-0.1"),y2:Qd("1e-1")
+            x1:Qd("1e-10"),y1:Qd("1e+3"),x2:Qd("0.9"),y2:Qd("1e-1")
         },
     },
     U234:{
