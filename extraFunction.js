@@ -6,7 +6,9 @@ const pi = Qd(Math.PI);
 const e = Qd(Math.E);
 const Barn = Qd("1e-24"); 
 const Avogadro = Qd("6.02214076e23"); // atoms/mol
-const R0 = Qd("1.2e-15")
+const R0 = Qd("1.2e-15");
+const ProtonMass = Qd("1.0072765");
+const NeutronMass = Qd("1.008665");
 
 const Mega = Qd("1e+6");
 const Kilo = Qd("1e+3");
@@ -14,6 +16,7 @@ const Hecto = Qd("1e+2");
 
 const KiloToPoundFactor = Qd("2.204622");
 const InchToCMFactor = Qd("2.54");
+const eVToJoulesFactor = Qd("1.60218e-19");
 
 const Ten = Qd("10");
 const One = Qd("1");
@@ -93,6 +96,10 @@ function CMToInches(CM) {
   return CM.div(InchToCMFactor);
 }
 
+function eVToJoules(eV) {
+  return eV.div(eVToJoulesFactor);
+}
+
 // all below functions do not use decimal.js, best to ignore them until i get to working on the main reactor handler.
 
 function InchToCM(Inches){
@@ -147,6 +154,13 @@ function GetNuclearVolume(MolarMass) { // approx
 function MassEnergyEquilvalence() {
   return 
 }
+
+function GetIsotopePreciseMass(AtomicMass, Electrons) {
+  return Electrons.mul(ProtonMass).add(NeutronMass.mul(AtomicMass.sub(Electrons)));
+}
+
+// calc reaction. have the mass of the fuel + 1 neutron - NYield. 
+// get mass defect: above number - two added product masses
 
 
 /*

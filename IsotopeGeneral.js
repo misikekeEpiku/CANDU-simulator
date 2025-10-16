@@ -838,6 +838,8 @@ for (var i = 0; i <= isolen.length; i++) {
   Isotope.Density = ElementRef.density;
   Isotope.NucleiVolume = GetNuclearVolume(Isotope.MolarMass);
   Isotope.NucleiDensity = Isotope.MolarMass/Isotope.NucleiVolume;
+  Isotope.PreciseMass = GetIsotopePreciseMass(Isotope.AtomicMass, Isotope.Electrons);
+  
 
 
   const Focus = IsotopeLogLineLine[__sym];
