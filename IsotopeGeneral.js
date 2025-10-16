@@ -42,15 +42,15 @@ const Isotopes = {
     Fuel: true,
   },
   U238: {
-    AtomicMass: Qd("238"), // int mass for neutron determining fission products
-    MolarMass: Qd("238.04"), // actual mass for other arbitrary uses
+    AtomicMass: Qd("238"),
+    MolarMass: Qd("238.04"),
     Electrons: Qd(92),
     Density: Qd("19.1"),
     NucleiDensity: Qd("1.16e17"), 
     FissionJoules: Qd("3.18e-11"),
     NeutronReleaseFission: ()=>{return NYield(2.07)},
-    FissionCrossSection: LogLineLineCrossSection(), // returns a function.
-    AbsorptionCrossSection: ()=>{},
+    FissionCrossSection: false,
+    AbsorptionCrossSection: false,
     IllegalProduct: true, 
     Fuel: true,
   },
@@ -867,12 +867,19 @@ for (var i = 0; i <= isolen.length; i++) {
   Isotope.Fuel = Isotope.Fuel ?? false;
   Isotope.IllegalProduct = Isotope.IllegalProduct ?? false;
 
-  const Focus = IsotopeLogLineLine[__sym]
+  const Focus = IsotopeLogLineLine[__sym];
   const Fis = Focus.Fission;
   const Abs = Focus.Absorption;
   
   if (Fis) {
-    Isotope.FissionCrossSection = LogLineLineCrossSection(Fis.x1, Fis.y1, Fis.x2, Fis.y2, Zero);
+    Isotope.FissionCrossSection = LogLineLineCrossSection(Fis.x1, Fis.y1, Fis.x2, Fis.y2);
+  } else {
+    Isotope.FissionCrossSection = false;
+  }
+  if (Abs) {
+    Isotope.AbsorptionCrossSection = LogLineLineCrossSection(Abs.x1, Abs.y1, Abs.x2, Abs.y2);
+  } else {
+    Isotope.AbsorptionCrossSection = false;
   }
 
 }

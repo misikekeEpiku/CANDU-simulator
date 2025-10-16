@@ -75,10 +75,10 @@ function CollisionProbability(Barns, AtomDensity, MaterialTravelDistance_cm) {
   return Decimal.sub(1, Decimal.exp(MacroXS.mul(MaterialTravelDistance_cm).neg()));
 }
 
-function LogLineLineCrossSection(x1, y1, x2, y2, HardLine) { // approximation that uses an effective slope
+function LogLineLineCrossSection(x1, y1, x2, y2) { // approximation that uses an effective slope
   const EffectiveSlope = Decimal.div(Decimal.log(y2).sub(Decimal.log(y1)), Decimal.log(x2).sub(Decimal.log(x1)));
-  return (eV)=>{Decimal.max(eV.pow(EffectiveSlope).sub(Decimal.mul(eV,HardLine)), Qd(0))};
-}
+  return (eV)=>{Decimal.max(eV.pow(EffectiveSlope), Qd(0))};
+}// get max of {eV^(es) - eV*Hardline}, {0}
 
 function ThermalFavoredCrossSection() { // ambiguous with no inputs. this is modeled after u235's absorption cross section
   return LogLineLineCrossSection()
