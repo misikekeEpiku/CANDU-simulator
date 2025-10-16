@@ -2,6 +2,14 @@ function Qd(str) {
   return new Decimal(str);
 }
 
+const Ten = Qd("10");
+
+function Pd(str) {
+  // assume str = 1e-9.5
+  const power = str.slice(str.indexOf("e")+1);
+  return Ten.pow(Qd(power));
+}
+
 const pi = Qd(Math.PI);
 const e = Qd(Math.E);
 const Barn = Qd("1e-24"); 
@@ -60,8 +68,12 @@ function ToLog(N) {
   return N.log("10");
 }
 
-function KiloToLog(Kilo) { // i am absolutely baffeled this has use
+function KiloToLog(Kilo) {
   return ToMilli(Kilo).log("10");
+}
+
+function MegaToLog(Mega) {
+  return ToMicro(Mega).log("10");
 }
 
 // generics
