@@ -94,10 +94,10 @@ const IsotopeLogLineLine = {
     },
     Np239:{
         Fission:{
-            x1:Qd("0"),y1:Qd("0"),x2:Qd("0"),y2:Qd("0")
+            x1:JAEAX1,y1:MilliToLog("28.01"),x2:JAEAX2,y2:ToLog("1.435")
         },
         Absorption:{
-            x1:Qd("1e-11"),y1:Qd("1.3e+3"),x2:Qd("0.3e-1"),y2:Qd("0.7e-1")
+            x1:Qd("1e-11"),y1:Pd("1e+3.3"),x2:Pd("1e-1.3"),y2:Qd("0")
         },
     },
     Np240:{
@@ -106,12 +106,12 @@ const IsotopeLogLineLine = {
     },
     // there are more plutonium isotopes i am not accounting for because they are unlikely
     // i may want to add them later.
-    Pu239:{ // dfv
+    Pu239:{ 
         Fission:{
             x1:JAEAX1,y1:ToLog("747.4"),x2:JAEAX2,y2:ToLog("2.334")
         },
         Absorption:{
-            x1:Qd("1e-11"),y1:Qd("1.05e+4"),x2:Qd("1e-1"),y2:Qd("1e-1")
+            x1:Qd("1e-11"),y1:Pd("1e+4.05"),x2:Qd("1e-1"),y2:Qd("1e-1")
         },
     },
     Pu240:{
@@ -119,15 +119,15 @@ const IsotopeLogLineLine = {
             x1:JAEAX1,y1:MicroToLog("36"),x2:JAEAX2,y2:ToLog("2")
         },
         Absorption:{
-            x1:Qd("1e-11"),y1:Qd("1.1e+4"),x2:Qd("1e-1"),y2:Qd("0")
+            x1:Qd("1e-11"),y1:Pd("1e+4.1"),x2:Qd("1e-1"),y2:Qd("0")
         },
     },
-    Pu241:{ // dfv
+    Pu241:{
         Fission:{
             x1:JAEAX1,y1:KiloToLog("1.016"),x2:JAEAX2,y2:ToLog("2.26")
         },
         Absorption:{
-            x1:Qd("1e-11"),y1:Qd("1.35e+4"),x2:Qd("1.5e-1"),y2:Qd("0.25e-1")
+            x1:Qd("1e-11"),y1:Pd("1e+4.35"),x2:Qd("1e-1.5"),y2:Qd("0.25e-1")
         },
     },
     Pu242:{
