@@ -127,7 +127,7 @@ const IsotopeLogLineLine = {
             x1:JAEAX1,y1:KiloToLog("1.016"),x2:JAEAX2,y2:ToLog("2.26")
         },
         Absorption:{
-            x1:Qd("1e-11"),y1:Pd("1e+4.35"),x2:Qd("1e-1.5"),y2:Qd("0.25e-1")
+            x1:Qd("1e-11"),y1:Pd("1e+4.35"),x2:Pd("1e-0.3"),y2:Pd("1e-0.7")
         },
     },
     Pu242:{
