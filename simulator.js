@@ -80,14 +80,6 @@ function LogLineLineCrossSection(x1, y1, x2, y2) { // approximation that uses an
   return (eV)=>{Decimal.max(eV.pow(EffectiveSlope), Qd(0))};
 }// get max of {eV^(es) - eV*Hardline}, {0}
 
-function ThermalFavoredCrossSection() { // ambiguous with no inputs. this is modeled after u235's absorption cross section
-  return LogLineLineCrossSection()
-}
-
-function FastFavoredCrossSection() { // ambiguous with no inputs. this is modeled after u238's fission cross section
-  
-}
-
 const GenericFuels = {
   NaturalUraniums: {
     U238: Qd("0.99275"),
