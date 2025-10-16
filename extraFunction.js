@@ -6,6 +6,7 @@ const pi = Qd(Math.PI);
 const e = Qd(Math.E);
 const Barn = Qd("1e-24"); 
 const Avogadro = Qd("6.02214076e23"); // atoms/mol
+const R0 = Qd("1.2e-15")
 
 const Mega = Qd("1e+6");
 const Kilo = Qd("1e+3");
@@ -18,6 +19,8 @@ const Ten = Qd("10");
 const One = Qd("1");
 const Zero = Qd("0");
 const NOne = Qd("-1");
+const FOT = Qd("4").div("3");
+const OT = One.div(Qd("3"));
 
 function Pd(str) { // precision decimal
   const power = str.slice(str.indexOf("e")+1);
@@ -122,5 +125,30 @@ function Extra(Chance) {
 }
 
 function NYield(Neutrons) {
-  return Extra(Neutrons % 1) + Math.floor(Neutrons)
+  return Extra(Neutrons % 1) + Math.floor(Neutrons);
 }
+
+function NYielder(MeanNeutrons) {
+  return ()=>{return NYield(MeanNeutrons)};
+}
+
+function Cube(N) {
+  return N.pow(Qd("3"));
+}
+
+function GetNuclearRadius(MolarMass) { // approx
+  return R0.mul(MolarMass.pow(OT));
+}
+
+function GetNuclearVolume(MolarMass) { // approx
+  return (FOT.mul(pi)).mul(Cube(GetNuclearRadius(MolarMass)));
+}
+
+function MassEnergyEquilvalence() {
+  return 
+}
+
+
+/*
+https://www.google.com/search?q=can+the+joules+released+by+u235+fission+be+approximately+calculated&sca_esv=8d3d49c28ce86d19&rlz=1CAHTBP_enUS1159&ei=ehDxaJuAKOvKp84P6Zj2gQc&ved=0ahUKEwibpc7NhamQAxVr5ckDHWmMPXAQ4dUDCBA&uact=5&oq=can+the+joules+released+by+u235+fission+be+approximately+calculated&gs_lp=Egxnd3Mtd2l6LXNlcnAiQ2NhbiB0aGUgam91bGVzIHJlbGVhc2VkIGJ5IHUyMzUgZmlzc2lvbiBiZSBhcHByb3hpbWF0ZWx5IGNhbGN1bGF0ZWQyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEdI70xQpw5YxktwAHgCkAEDmAEAoAEAqgEAuAEDyAEA-AEBmAIBoAIPmAMAiAYBkAYIkgcBMaAHALIHALgHAMIHAzMtMcgHCg&sclient=gws-wiz-serp&safe=active&ssui=on
+*/
