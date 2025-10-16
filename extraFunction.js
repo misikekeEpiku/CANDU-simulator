@@ -1,13 +1,5 @@
-function Qd(str) {
+function Qd(str) { // quick decimal
   return new Decimal(str);
-}
-
-const Ten = Qd("10");
-
-function Pd(str) {
-  // assume str = 1e-9.5
-  const power = str.slice(str.indexOf("e")+1);
-  return Ten.pow(Qd(power));
 }
 
 const pi = Qd(Math.PI);
@@ -22,9 +14,15 @@ const Hecto = Qd("1e+2");
 const KiloToPoundFactor = Qd("2.204622");
 const InchToCMFactor = Qd("2.54");
 
+const Ten = Qd("10");
 const One = Qd("1");
 const Zero = Qd("0");
 const NOne = Qd("-1");
+
+function Pd(str) { // precision decimal
+  const power = str.slice(str.indexOf("e")+1);
+  return Ten.pow(Qd(power));
+}
 
 // its fine if some of these go unused so long as it keeps a naming convention
 
