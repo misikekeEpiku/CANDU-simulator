@@ -151,7 +151,9 @@ function GetNuclearVolume(MolarMass) { // approx
   return (FOT.mul(pi)).mul(Cube(GetNuclearRadius(MolarMass)));
 }
 
-function MassEnergyEquilvalence() {
+function MassEnergyEquilvalence(Isotope, Released) { // requires that i have two define products or this cannot be calculated.
+  Iso.PreciseMass.add(NeutronMass);
+  
   return 
 }
 
@@ -159,8 +161,11 @@ function GetIsotopePreciseMass(AtomicMass, Electrons) {
   return Electrons.mul(ProtonMass).add(NeutronMass.mul(AtomicMass.sub(Electrons)));
 }
 
+
+
 // calc reaction. have the mass of the fuel + 1 neutron - NYield. 
 // get mass defect: above number - two added product masses
+
 
 
 /*
