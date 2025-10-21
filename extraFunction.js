@@ -151,7 +151,7 @@ function GetNuclearVolume(MolarMass) { // approx
   return (FOT.mul(pi)).mul(Cube(GetNuclearRadius(MolarMass)));
 }
 
-function MassEnergyEquilvalence(Isotope, Released) { // requires that i have two define products or this cannot be calculated.
+function GetMassEnergyEquilvalence(Isotope, Released) { // requires that i have two define products or this cannot be calculated.
   Iso.PreciseMass.add(NeutronMass);
   
   return 
@@ -161,7 +161,45 @@ function GetIsotopePreciseMass(AtomicMass, Electrons) {
   return Electrons.mul(ProtonMass).add(NeutronMass.mul(AtomicMass.sub(Electrons)));
 }
 
+function GetPossibleFissionProducts(AtomicMass, Electrons, NeutronsReleased) { // 
+  const SumProductMasses = AtomicMass-NeutronsReleased;
+  const val = Object.values(Isotopes);
+  const key = Object.keys(Isotopes);
 
+  const SeenBefore = [];
+  const Pairs = [];
+
+  console.log("Looking for "+SumProductMasses+" from mass "+AtomicMass+" losing "+NeutronsReleased);
+  for (var a in val) {
+    const IsotopeA = val[a];
+    if (IsotopeA.IllegalProduct) continue;
+    for (var b in val) {
+      const IsotopeB = val[b];
+      if (IsotopeB.IllegalProduct) continue;
+      const Target = (+IsotopeA.AtomicMass)+(+IsotopeB.AtomicMass);
+      
+      if (SeenBefore.includes(a) || SeenBefore.includes(b)) {
+        continue;
+      }
+
+      if (SumProductMasses == Target) {
+        //console.log("Found pair!");
+        console.log(key[a]+" and "+key[b]);
+        SeenBefore.push(a, b);
+        Pairs.push([IsotopeA, IsotopeB]);
+      }
+    }
+  }
+}
+
+function GetBetaDecayProduct(AtomicMass, Electrons) { 
+
+}
+
+
+// need to create a curve for fission product probabilities. the yield is different by fissioned fuel which means each fuel ideally needs its own curve
+// in the calculation, the result should be a pair of two isotopes with a combined probability. like a version of GetPossibleFissionProducts()
+// except that it also returns the probability of the pair.
 
 // calc reaction. have the mass of the fuel + 1 neutron - NYield. 
 // get mass defect: above number - two added product masses

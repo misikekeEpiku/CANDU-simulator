@@ -90,43 +90,6 @@ const GenericFuels = {
   }
 }
 
-function GetRandomFissionProducts(AtomicMass, Electrons, NeutronsReleased) { // 
-  const SumProductMasses = AtomicMass-NeutronsReleased;
-  const val = Object.values(Isotopes);
-  const key = Object.keys(Isotopes);
-
-  const SeenBefore = [];
-  const Pairs = [];
-
-  console.log("Looking for "+SumProductMasses+" from mass "+AtomicMass+" losing "+NeutronsReleased);
-  for (var a in val) {
-    const IsotopeA = val[a];
-    if (IsotopeA.IllegalProduct) continue;
-    for (var b in val) {
-      const IsotopeB = val[b];
-      if (IsotopeB.IllegalProduct) continue;
-      const Target = (+IsotopeA.AtomicMass)+(+IsotopeB.AtomicMass);
-      
-      if (SeenBefore.includes(a) || SeenBefore.includes(b)) {
-        continue;
-      }
-
-      if (SumProductMasses == Target) {
-        //console.log("Found pair!");
-        console.log(key[a]+" and "+key[b]);
-        SeenBefore.push(a, b);
-        Pairs.push([IsotopeA, IsotopeB]);
-      }
-    }
-  }
-}
-
-GetRandomFissionProducts(230, 92, 3);
-
-function GetBetaDecayProduct(AtomicMass, Electrons) { // the number of electrons will go up by one
-
-}
-
 const ColorDict = {
   yel:"#ffff00ff",
   dark:"#9a9a9aff",
