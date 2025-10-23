@@ -65,20 +65,7 @@ const FuelCylinderHeightCM = (FuelCylinderLength/DPCM); // cm
 const FuelCylinderLengthCM = (FuelCylinderDiameter/DPCM); // cm
 const FuelCylinderArea = (+pi) * Math.pow(FuelCylinderLengthCM/2, 2) * FuelCylinderHeightCM;
 
-function AtomDensity(MaterialDensity_g_per_cm3, MolarMass_g_per_mol) {
-  return MaterialDensity_g_per_cm3.mul(Avogadro).div(MolarMass_g_per_mol);
-}
 
-function CollisionProbability(Barns, AtomDensity, MaterialTravelDistance_cm) {
-  const Sigma = Barns.mul(Barn);
-  const MacroXS = AtomDensity.mul(Sigma);
-  return Decimal.sub(1, Decimal.exp(MacroXS.mul(MaterialTravelDistance_cm).neg()));
-}
-
-function LogLineLineCrossSection(x1, y1, x2, y2) { // approximation that uses an effective slope
-  const EffectiveSlope = Decimal.div(Decimal.log(y2).sub(Decimal.log(y1)), Decimal.log(x2).sub(Decimal.log(x1)));
-  return (eV)=>{Decimal.max(eV.pow(EffectiveSlope), Qd(0))};
-}// get max of {eV^(es) - eV*Hardline}, {0}
 
 const GenericFuels = {
   NaturalUraniums: {

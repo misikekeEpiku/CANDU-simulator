@@ -839,8 +839,8 @@ for (var i = 0; i <= isolen.length; i++) {
   Isotope.NucleiVolume = GetNuclearVolume(Isotope.MolarMass);
   Isotope.NucleiDensity = Isotope.MolarMass/Isotope.NucleiVolume;
   Isotope.PreciseMass = GetIsotopePreciseMass(Isotope.AtomicMass, Isotope.Electrons);
-  
-
+  Isotope.LightProductCommon = centerAApprox(Isotope.AtomicMass);
+  Isotope.ProductCurse = LikelyProductDistributor(Isotope.LightProductCommon);
 
   const Focus = IsotopeLogLineLine[__sym];
   const Fis = Focus.Fission;
