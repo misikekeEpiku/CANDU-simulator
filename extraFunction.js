@@ -189,6 +189,14 @@ function NYielder(MeanNeutrons) { // LOGIC
 
 // NUCLEAR FUNCTIONS //
 
+function GetPeriodicTableElementByNumber(Num) {
+  for (var i in PeriodicTable.elements) {
+    if (PeriodicTable.elements[i].number == Num) {
+      return PeriodicTable.elements[i]
+    }
+  }
+}
+
 function AtomDensity(Density, MolarMass) { // APPROX
   return Density.mul(Avogadro).div(MolarMass);
 }
