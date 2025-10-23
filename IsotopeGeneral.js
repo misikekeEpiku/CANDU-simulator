@@ -827,7 +827,7 @@ const isolen = Object.keys(Isotopes);
 for (var i = 0; i < isolen.length; i++) {
   const Name = isolen[i];
   const Isotope = Isotopes[Name];
-  const ElementRef = PeriodicTable.elements[+Isotope.Electrons];
+  const ElementRef = PeriodicTable.elements[+Isotope.Electrons-1]; // dont know why it wants to be -1
   const _sym = ElementRef.symbol+"-"+(+Isotope.AtomicMass);
   const __sym = ElementRef.symbol+(+Isotope.AtomicMass);
   Isotope.ElementName = ElementRef.name;
@@ -838,16 +838,9 @@ for (var i = 0; i < isolen.length; i++) {
   Isotope.Density = ElementRef.density;
   Isotope.NucleiVolume = GetNuclearVolume(Isotope.MolarMass);
   Isotope.NucleiDensity = Isotope.MolarMass/Isotope.NucleiVolume;
-  Isotope.PreciseMass = GetIsotopePreciseMass(Isotope.AtomicMass, Isotope.Electrons);
+  Isotope.PreciseMass = Isotope.MolarMass; // GetIsotopePreciseMass(Isotope.AtomicMass, Isotope.Electrons); // absolutely no idea
   Isotope.LightProductCommon = centerAApprox(Isotope.AtomicMass);
   Isotope.ProductCurse = LikelyProductDistributor(Isotope.LightProductCommon);
-
-  if (Isotope.Fuel) {
-    Isotope.Weight = [];
-    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("2"), {Fuel:Isotope});
-    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("3"), {Fuel:Isotope});
-    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("4"), {Fuel:Isotope});
-  }
   
   const Focus = IsotopeLogLineLine[__sym];
   if (Focus) {
@@ -869,5 +862,16 @@ for (var i = 0; i < isolen.length; i++) {
       Fission: false,
       Absorption: false,
     }
+  }
+}
+
+for (var i = 0; i < isolen.length; i++) {
+  const Name = isolen[i];
+  const Isotope = Isotopes[Name];
+  if (Isotope.Fuel) {
+    Isotope.Weight = [];
+    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("2"), {Fuel:Isotope});
+    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("3"), {Fuel:Isotope});
+    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("4"), {Fuel:Isotope});
   }
 }

@@ -248,6 +248,10 @@ function GetIsotopePreciseMass(AtomicMass, Electrons) { // APPROX
   return Electrons.mul(ProtonMass).add(NeutronMass.mul(AtomicMass.sub(Electrons)));
 }
 
+function DumbIsotope(Isotope) {
+  return {Symbol:Isotope.Symbol, AtomicMass:Isotope.AtomicMass}
+}
+
 function GetPossibleFissionProducts(AtomicMass, Electrons, NeutronsReleased, Meta) {
   const SumProductMasses = AtomicMass.sub(NeutronsReleased);
   const val = Object.values(Isotopes);
@@ -284,7 +288,7 @@ function GetPossibleFissionProducts(AtomicMass, Electrons, NeutronsReleased, Met
             if (!Fuel.Weight[NeutronsReleased]) {
               Fuel.Weight[NeutronsReleased] = new Weight(Zero);
             }
-            Fuel.Weight[NeutronsReleased].AppendResult([IsotopeA, IsotopeB], SetWeight);
+            Fuel.Weight[NeutronsReleased].AppendResult([DumbIsotope(IsotopeA), DumbIsotope(IsotopeB)], SetWeight);
           }
         }
       }
@@ -315,20 +319,6 @@ function SimpleGetRandomProducts(Fuel, LostNeutrons, Meta) {
   }
 }
 
-
-// need to create a curve for fission product probabilities. the yield is different by fissioned fuel which means each fuel ideally needs its own curve
-// in the calculation, the result should be a pair of two isotopes with a combined probability. like a version of GetPossibleFissionProducts()
-// except that it also returns the probability of the pair.
-
-// calc reaction. have the mass of the fuel + 1 neutron - NYield. 
-// get mass defect: above number - two added product masses
-
-
-
-/*
-https://www.google.com/search?q=can+the+joules+released+by+u235+fission+be+approximately+calculated&sca_esv=8d3d49c28ce86d19&rlz=1CAHTBP_enUS1159&ei=ehDxaJuAKOvKp84P6Zj2gQc&ved=0ahUKEwibpc7NhamQAxVr5ckDHWmMPXAQ4dUDCBA&uact=5&oq=can+the+joules+released+by+u235+fission+be+approximately+calculated&gs_lp=Egxnd3Mtd2l6LXNlcnAiQ2NhbiB0aGUgam91bGVzIHJlbGVhc2VkIGJ5IHUyMzUgZmlzc2lvbiBiZSBhcHByb3hpbWF0ZWx5IGNhbGN1bGF0ZWQyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEdI70xQpw5YxktwAHgCkAEDmAEAoAEAqgEAuAEDyAEA-AEBmAIBoAIPmAMAiAYBkAYIkgcBMaAHALIHALgHAMIHAzMtMcgHCg&sclient=gws-wiz-serp&safe=active&ssui=on
-*/
-
 // DEPRECATED //
 
 function __InchToCM(Inches){
@@ -351,4 +341,28 @@ function __MeVtoeV(x) { // arbitrary, due for removal
 function __roundTo(x, n) {
   const factor = Math.pow(10, n);
   return Math.round(x * factor) / factor;
+}
+
+// OTHER // 
+
+function ExportExpression(myObject) {
+  // Convert the JavaScript object to a JSON string
+  const jsonString = JSON.stringify(myObject, null, 2); 
+
+  // Create a Blob from the JSON string
+  const blob = new Blob([jsonString], { type: 'application/json' });  
+
+  // Create a temporary URL for the Blob
+  const url = URL.createObjectURL(blob);  
+
+  // Create a link element, set its attributes, and trigger a click
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'data.json'; // Suggested filename
+  document.body.appendChild(a);
+  a.click();  
+
+  // Clean up the temporary URL and element
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
