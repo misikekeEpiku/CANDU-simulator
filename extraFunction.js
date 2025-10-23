@@ -33,6 +33,7 @@ const Hecto = Qd("1e+2");
 const KiloToPoundFactor = Qd("2.204622");
 const InchToCMFactor = Qd("2.54");
 const eVToJoulesFactor = Qd("1.60218e-19");
+const DaltonToKGFactor = Qd("1.6605300000013E-27");
 
 const NOne = Qd("-1");
 const Zero = Qd("0");
@@ -45,6 +46,30 @@ const FOT = Qd("4").div(Three);
 const OT = One.div(Three);
 
 // GENERAL USE MATHS //
+
+class Weight {
+  constructor(Total) {
+    this.Total = Total;
+    this.Results = []; // {Identifier, Weight}
+  }
+  AppendResult(Identifier, Weight) {
+    this.Results.push({Identity: Identifier, Weight:Weight});
+    this.Total = this.Total.add(Weight);
+    this.Results.sort((a, b) => a.Weight.toNumber() - b.Weight.toNumber());
+  }
+  AddResult(Identifier, Weight) {
+    this.Results.push({Identity: Identifier, Weight:Weight});
+    this.Results.sort((a, b) => a.Weight.toNumber() - b.Weight.toNumber());
+  }
+  GetResult() {
+    const Choice = Qd(Math.random()).mul(this.Total).floor();
+    var i, sum = Zero;
+    for (i in this.Results) {
+      sum = sum.add(this.Results[i].Weight);
+      if (Choice.lte(sum)) {return this.Results[i].Identity};
+    }
+  }
+}
 
 // Generic collection
 function Square(N) {
@@ -108,23 +133,23 @@ function MegaToBase(N) {
 // Tolog collection
 // generally only going to see use in ILLL
 function MicroToLog(Micro) {
-  return BaseToMega(Micro).log("10");
+  return BaseToMega(Qd(Micro)).log("10");
 }
 
 function MilliToLog(Milli) {
-  return BaseToKilo(Milli).log("10");
+  return BaseToKilo(Qd(Milli)).log("10");
 }
 
 function ToLog(N) {
-  return N.log("10");
+  return Qd(N).log("10");
 }
 
 function KiloToLog(Kilo) {
-  return BaseToMilli(Kilo).log("10");
+  return BaseToMilli(Qd(Kilo)).log("10");
 }
 
 function MegaToLog(Mega) {
-  return BaseToMicro(Mega).log("10");
+  return BaseToMicro(Qd(Mega)).log("10");
 }
 
 // GENERAL USE UNIT CONVERSION FUNCTIONS //
@@ -139,6 +164,10 @@ function CMToInches(CM) {
 
 function eVToJoules(eV) {
   return eV.div(eVToJoulesFactor);
+}
+
+function DaltonToKG(Dalton) {
+  return Dalton.mul(DaltonToKGFactor);
 }
 
 // LOGIC FUNCTIONS //
@@ -191,7 +220,7 @@ function LikelyProductDistributor(centerA) { // the only thing that generally ch
 }
 
 function centerAApprox(FuelMass) {
-  return Qd("95")+(FuelMass/Two-Qd("235")/Two)
+  return Qd("95").add((FuelMass.div(Two).sub(Qd("235").div(Two))));
 }
 
 function GetSetWeight(FuelAtomicMass, ProductA, ProductB) {
@@ -210,25 +239,25 @@ function GetNuclearVolume(MolarMass) { // APPROX
   return (FOT.mul(pi)).mul(Cube(GetNuclearRadius(MolarMass)));
 }
 
-function GetMassEnergyEquilvalence(Isotope, Released) { // APPROX // requires that i have two define products or this cannot be calculated.
-  Iso.PreciseMass.add(NeutronMass);
-  
-  return 
+function GetMassEnergyEquilvalence(Mass) { // APPROX // requires that i have two define products or this cannot be calculated.
+  Mass = NeutronMass.mul(Mass);
+  return DaltonToKG(Mass).mul(Square(c));
 }
 
 function GetIsotopePreciseMass(AtomicMass, Electrons) { // APPROX
   return Electrons.mul(ProtonMass).add(NeutronMass.mul(AtomicMass.sub(Electrons)));
 }
 
-function GetPossibleFissionProducts(AtomicMass, Electrons, NeutronsReleased) {
-  const SumProductMasses = AtomicMass-NeutronsReleased;
+function GetPossibleFissionProducts(AtomicMass, Electrons, NeutronsReleased, Meta) {
+  const SumProductMasses = AtomicMass.sub(NeutronsReleased);
   const val = Object.values(Isotopes);
   const key = Object.keys(Isotopes);
+  var FullFuelWeight = Qd("0");
 
   const SeenBefore = [];
   const Pairs = [];
 
-  console.log("Looking for "+SumProductMasses+" from mass "+AtomicMass+" losing "+NeutronsReleased);
+  //console.log("Looking for "+(+SumProductMasses)+" from mass "+AtomicMass+" losing "+NeutronsReleased);
   for (var a in val) {
     const IsotopeA = val[a];
     if (IsotopeA.IllegalProduct || IsotopeA.Fuel) continue;
@@ -241,19 +270,49 @@ function GetPossibleFissionProducts(AtomicMass, Electrons, NeutronsReleased) {
         continue;
       }
 
-      if (SumProductMasses == Target) {
-        //console.log("Found pair!");
-        console.log(key[a]+" and "+key[b]);
+      if ((+SumProductMasses) == Target) {
+        //console.log(key[a]+" and "+key[b]);
         SeenBefore.push(a, b);
         Pairs.push([IsotopeA, IsotopeB]);
-        GetSetWeight(SumProductMasses, IsotopeA.AtomicMass, IsotopeB.AtomicMass)
+        //console.log(SumProductMasses);
+        const SetWeight = GetSetWeight(SumProductMasses, IsotopeA.AtomicMass, IsotopeB.AtomicMass).mul(Mega.mul("100")).floor();
+        FullFuelWeight = FullFuelWeight.add(SetWeight);
+        //console.log(+SetWeight);
+        if (Meta) {
+          if (Meta.Fuel) {
+            const Fuel = Meta.Fuel;
+            if (!Fuel.Weight[NeutronsReleased]) {
+              Fuel.Weight[NeutronsReleased] = new Weight(Zero);
+            }
+            Fuel.Weight[NeutronsReleased].AppendResult([IsotopeA, IsotopeB], SetWeight);
+          }
+        }
       }
     }
   }
+  //console.log("Combined weight of all product pairs:");
+  //console.log(+FullFuelWeight);
 }
 
 function GetBetaDecayProduct(AtomicMass, Electrons) { 
 
+}
+
+function SimplifyResult(Arr) {
+  return Arr[0].Symbol+" and "+Arr[1].Symbol+` (${(+Arr[0].AtomicMass)+(+Arr[1].AtomicMass)})`;
+}
+
+function SimpleGetRandomProducts(Fuel, LostNeutrons, Meta) {
+  if (!Meta) {
+    if (!Isotopes[Fuel]) return "that doesnt exist MORON";
+    if (!Isotopes[Fuel].Fuel) return "not a fricken fuel MORON";
+    return SimplifyResult(Isotopes[Fuel].Weight[LostNeutrons].GetResult());
+  } else if (Meta=="Result+Energy") {
+    if (!Isotopes[Fuel]) return "that doesnt exist MORON";
+    if (!Isotopes[Fuel].Fuel) return "not a fricken fuel MORON";
+    console.log("Energy (J): "+(+GetMassEnergyEquilvalence(Qd(LostNeutrons))));
+    console.log(SimplifyResult(Isotopes[Fuel].Weight[LostNeutrons].GetResult()));
+  }
 }
 
 

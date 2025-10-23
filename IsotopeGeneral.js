@@ -12,7 +12,7 @@ const Isotopes = {
     Fuel: true,
   },
   U235: {
-    AtomicMass: Qd(238),
+    AtomicMass: Qd(235),
     Electrons: Qd(92),
     FissionJoules: Qd("3.2e-11"),
     NeutronReleaseFission: NYielder(2.47),
@@ -824,7 +824,7 @@ const Isotopes = {
 
 const isolen = Object.keys(Isotopes);
 
-for (var i = 0; i <= isolen.length; i++) {
+for (var i = 0; i < isolen.length; i++) {
   const Name = isolen[i];
   const Isotope = Isotopes[Name];
   const ElementRef = PeriodicTable.elements[+Isotope.Electrons];
@@ -842,19 +842,32 @@ for (var i = 0; i <= isolen.length; i++) {
   Isotope.LightProductCommon = centerAApprox(Isotope.AtomicMass);
   Isotope.ProductCurse = LikelyProductDistributor(Isotope.LightProductCommon);
 
-  const Focus = IsotopeLogLineLine[__sym];
-  const Fis = Focus.Fission;
-  const Abs = Focus.Absorption;
+  if (Isotope.Fuel) {
+    Isotope.Weight = [];
+    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("2"), {Fuel:Isotope});
+    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("3"), {Fuel:Isotope});
+    GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("4"), {Fuel:Isotope});
+  }
   
-  if (Fis) {
-    Isotope.FissionCrossSection = LogLineLineCrossSection(Fis.x1, Fis.y1, Fis.x2, Fis.y2);
+  const Focus = IsotopeLogLineLine[__sym];
+  if (Focus) {
+    const Fis = Focus.Fission;
+    const Abs = Focus.Absorption;
+    
+    if (Fis) {
+      Isotope.FissionCrossSection = LogLineLineCrossSection(Fis.x1, Fis.y1, Fis.x2, Fis.y2);
+    } else {
+      Isotope.FissionCrossSection = false;
+    }
+    if (Abs) {
+      Isotope.AbsorptionCrossSection = LogLineLineCrossSection(Abs.x1, Abs.y1, Abs.x2, Abs.y2);
+    } else {
+      Isotope.AbsorptionCrossSection = false;
+    }
   } else {
-    Isotope.FissionCrossSection = false;
+    IsotopeLogLineLine[__sym] = {
+      Fission: false,
+      Absorption: false,
+    }
   }
-  if (Abs) {
-    Isotope.AbsorptionCrossSection = LogLineLineCrossSection(Abs.x1, Abs.y1, Abs.x2, Abs.y2);
-  } else {
-    Isotope.AbsorptionCrossSection = false;
-  }
-
 }
