@@ -5,8 +5,6 @@ rod selection and individual managing
 ^ change insertion by number
 ^ fix rod (toggle)
 
-some kind of heat venting
-
 bulk control rod managing
 ^ color groups (red, blue, green, purple)
 ^ bulk change insertion
@@ -52,7 +50,7 @@ const AdjusterRodWidth = 8; // pixels
 const coreHeight = FluidElement; // 300
 const coreWidth = FluidElement; // 300
 
-const DPI = coreWidth / (CalandriaSizeCM/(+InchFactor));
+const DPI = coreWidth / (CalandriaSizeCM/(+InchToCMFactor));
 const DPCM = coreWidth / CalandriaSizeCM;
 
 const IntervalVAdjusterRod = coreWidth/FuelColumns;
@@ -68,7 +66,7 @@ const FuelCylinderArea = (+pi) * Math.pow(FuelCylinderLengthCM/2, 2) * FuelCylin
 
 
 const GenericFuels = {
-  NaturalUraniums: {
+  NaturalUranium: {
     U238: Qd("0.99275"),
     U235: Qd("0.00720"),
     U234: Qd("0.00005"),
