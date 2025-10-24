@@ -162,6 +162,10 @@ function CMToInches(CM) {
   return CM.div(InchToCMFactor);
 }
 
+function KGToPound(KG) {
+  return KG.mul(KiloToPoundFactor);
+}
+
 function eVToJoules(eV) {
   return eV.div(eVToJoulesFactor);
 }
@@ -373,4 +377,42 @@ function ExportExpression(myObject) {
   // Clean up the temporary URL and element
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+// OTHER CONSTANTS // 
+
+const GenericFuels = {
+  NaturalUranium: {
+    Composition: [
+      {Isotope:"U238", $:Qd("0.99275")},
+      {Isotope:"U235", $:Qd("0.00720")},
+      {Isotope:"U234", $:Qd("0.00005")},
+    ],
+    Density: Qd("19.05"),
+    AtomsInKG: Qd("1.15e24"),
+  }
+}
+
+const ColorDict = {
+  yel:"#ffff00ff",
+  dark:"#9a9a9aff",
+  CellInnerLight:"#3d3d3dff",
+  CellDark:"#252525ff",
+  NUInnerLight:"#52ba4cff",
+  NUDark:"#3d9339ff",
+  bal:"#000000ff",
+  U238:"#00bb06ff",
+  U235:"#dfcc00ff",
+  nal:"#ffa185ff", // color used for internal styling
+  mel:"#7b0101ff" // color used for internal styling
+}
+
+function ArbitStyler(Element, Scale, Margin, TL) {
+  Element.style.height = Scale+"px";
+  Element.style.width = Scale+"px";
+  Element.style.margin = (Margin ?? "0px")+"px";
+  if (TL) {
+    Element.style.top = TL.y+"px";
+    Element.style.left = TL.x+"px";
+  }
 }

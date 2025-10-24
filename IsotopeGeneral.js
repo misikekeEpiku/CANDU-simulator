@@ -822,6 +822,8 @@ const Isotopes = {
   },
 };
 
+console.log("Compliation Start")
+console.time();
 const isolen = Object.keys(Isotopes);
 
 for (var i = 0; i < isolen.length; i++) {
@@ -875,3 +877,5 @@ for (var i = 0; i < isolen.length; i++) {
     GetPossibleFissionProducts(Isotope.AtomicMass, 0, Qd("4"), {Fuel:Isotope});
   }
 }
+
+console.timeEnd();

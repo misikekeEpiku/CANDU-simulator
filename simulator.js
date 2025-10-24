@@ -1,6 +1,8 @@
 /*
 To implement
 
+standarize rod composition you diddy blud
+
 rod selection and individual managing
 ^ change insertion by number
 ^ fix rod (toggle)
@@ -29,7 +31,10 @@ const RodArray = [];
 const HorizontalRodArray = [];
 const FuelArray = [];
 const NotchAndPair = [];
-const keys = [];
+const KeysDown = {
+  Shift: false,
+
+};
 var MostRecentTarget = {};
 
 // MEASURMENTS //
@@ -52,7 +57,7 @@ const AdjusterRodWidth = 8; // pixels
 const coreHeight = FluidElement; // 300
 const coreWidth = FluidElement; // 300
 
-const DPI = coreWidth / (CalandriaSizeCM/(+InchFactor));
+const DPI = coreWidth / (CalandriaSizeCM/(+InchToCMFactor));
 const DPCM = coreWidth / CalandriaSizeCM;
 
 const IntervalVAdjusterRod = coreWidth/FuelColumns;
@@ -65,38 +70,10 @@ const FuelCylinderHeightCM = (FuelCylinderLength/DPCM); // cm
 const FuelCylinderLengthCM = (FuelCylinderDiameter/DPCM); // cm
 const FuelCylinderArea = (+pi) * Math.pow(FuelCylinderLengthCM/2, 2) * FuelCylinderHeightCM;
 
-
-
-const GenericFuels = {
-  NaturalUraniums: {
-    U238: Qd("0.99275"),
-    U235: Qd("0.00720"),
-    U234: Qd("0.00005"),
-    Density: Qd("19.05"),
-    AtomsInKG: Qd("1.15e24")
-  }
-}
-
-const ColorDict = {
-  yel:"#ffff00ff",
-  dark:"#9a9a9aff",
-  CellInnerLight:"#3d3d3dff",
-  CellDark:"#252525ff",
-  NUInnerLight:"#52ba4cff",
-  NUDark:"#3d9339ff",
-  bal:"#000000ff",
-  U238:"#00bb06ff",
-  U235:"#dfcc00ff",
-  nal:"#ffa185ff", // color used for internal styling
-  mel:"#7b0101ff" // color used for internal styling
-}
-
 const FuelCylinderRadiusCM = FuelCylinderDiameter/2/DPCM;
 const FuelCylinderGrams = FuelCylinderArea*(GenericFuels[Fuel].Density); // g
-const FuelCylinderKG = FuelCylinderGrams/1000*(+PoundFactor);
+const FuelCylinderKG = FuelCylinderGrams/1000*(+KiloToPoundFactor);
 
-//console.log(Decimal.sub(new Decimal(1), Decimal.pow(e,new Decimal(-1).mul(Isotopes.U238.NucleiDensity).mul(Isotopes.U238.Barns(0.2).mul(FuelCylinderRadiusCM)))))
-//console.log(+Decimal.pow(e,new Decimal(-1).mul(Isotopes.U238.NucleiDensity).mul(Isotopes.U238.Barns(0.2).mul(FuelCylinderRadiusCM))))
 const FuelNeutronEmissionMinute = Math.floor(FuelCylinderGrams*6.5);
 
 const ContainerMain = document.getElementById("ContainerMain");
@@ -124,33 +101,23 @@ VCopyableControlRod.style.height = FluidElement;
 HCopyableControlRod.style.height = AdjusterRodWidth;
 HCopyableControlRod.style.width = FluidElement;
 
-_Scale(ContainerMain, SimContainer, SimPageMargin);
-_Scale(Calandria, CalandriaScale, null, CalandriaTopLeft);
-_Scale(Core, FluidElement, null, FluidElementTL);
+ArbitStyler(ContainerMain, SimContainer, SimPageMargin);
+ArbitStyler(Calandria, CalandriaScale, null, CalandriaTopLeft);
+ArbitStyler(Core, FluidElement, null, FluidElementTL);
 
 VCopyableControlRod.style.display = 'none';
 HCopyableControlRod.style.display = 'none';
 NeutronGraphic.style.display = 'none';
 Core.className = "Water";
 
-function _Scale(Element, Scale, Margin, TL) {
-  Element.style.height = Scale+"px";
-  Element.style.width = Scale+"px";
-  Element.style.margin = (Margin ?? "0px")+"px";
-  if (TL) {
-    Element.style.top = TL.y+"px";
-    Element.style.left = TL.x+"px";
-  }
-}
-
 // INFO PROMPT CONTROLLER //
 
 document.addEventListener("keydown",(event)=>{
-  keys[event.keyCode] = true;
+  KeysDown[event.key] = true;
   InfoUpdater(event, true);
 })
 document.addEventListener("keyup",(event)=>{
-  keys[event.keyCode] = false;
+  KeysDown[event.key] = false;
   InfoUpdater(event, true);
 })
 
@@ -201,7 +168,7 @@ function HandleHolding(Event) {
     Notch.style.top = CursorHeight*VisualScalingFactor+"%";
     // On the screen im working with this has produced a rounding error that prohibits the notches from
     // reaching the bottom of the adjuster rods but it IS 98% which is intended behavior so its good enough
-    Rod.__Insertion = roundTo(CursorHeight/100,2);
+    Rod.__Insertion = Qd(CursorHeight/100).toPrecision(2);
   } else {
     const Width = CBR.x - CTL.x;
   
@@ -212,7 +179,7 @@ function HandleHolding(Event) {
     Notch.style.left = CursorWidth*VisualScalingFactor+"%";
     // On the screen im working with this has produced a rounding error that prohibits the notches from
     // reaching the bottom of the adjuster rods but it IS 98% which is intended behavior so its good enough
-    Rod.__Insertion = roundTo(1-(CursorWidth/100),2);
+    Rod.__Insertion = Qd(1-(CursorWidth/100)).toPrecision(2);
   }
   //RodDescriptor(Holding);
 }
@@ -246,8 +213,6 @@ function HardUpdateNotches() {
   });
 }
 
-keys[16] = false;
-
 function InfoUpdater(event, keyCase, silent){
   // this function handles mouseMove (e,null)=>{} AND keyDown (e,null)=>{} keyUp (e,true)=>{}
   function Update(Target) {
@@ -261,7 +226,7 @@ function InfoUpdater(event, keyCase, silent){
         Stepless = true;
       }
     }
-    if (keys[16] == false) {
+    if (KeysDown["Shift"] == false) {
       if (!Extras) { // shift is not down and there are no extras
         Info.innerHTML = Desc;
       } else { // shift is not down and there are extras
@@ -568,7 +533,7 @@ function GeneralInformationPanelUpdater() {
     NS += FuelBundle.__NeutronsLastFrame;
   });
   MBH = MBH/Object.values(FuelArray).length;
-  MBH = roundTo(MBH, 2);
+  MBH = Qd(MBH).toPrecision(2);
   
   var MARI = 0;
   const arawerarwar$$$$ = Object.values(RodArray).concat(Object.values(HorizontalRodArray));
@@ -576,13 +541,13 @@ function GeneralInformationPanelUpdater() {
     MARI += Adjuster.__Insertion;
   });
   MARI = MARI/arawerarwar$$$$.length*100;
-  MARI = roundTo(MARI, 2);
+  MARI = Qd(MARI).toPrecision(2);
   
-  const A = new Property("Mean Bundle Heat", "red", MBH).flip();
-  const B = new Property("Mean Adjuster Rod Insertion", "red", MARI).flip().suff("%", true);
-  const BC = new Property("Joules Last Frame", "mel", JoulesOutput).flip().internal("mel");
-  const C = new Property("Neutrons Simulated", "mel", NS).flip().internal("mel");
-  const D = new Property("Last Frame Time", "mel", LastMS).flip().suff("MS").internal("mel");
+  var A = new Property("Mean Bundle Heat", "red", MBH).flip();
+  var B = new Property("Mean Adjuster Rod Insertion", "red", MARI).flip().suff("%", true);
+  var BC = new Property("Joules Last Frame", "mel", JoulesOutput).flip().internal("mel");
+  var C = new Property("Neutrons Simulated", "mel", NS).flip().internal("mel");
+  var D = new Property("Last Frame Time", "mel", LastMS).flip().suff("MS").internal("mel");
   
   MeanBundleHeat.innerHTML = A.Finalize();
   MeanAdjusterRodInsertion.innerHTML = B.Finalize();
@@ -611,7 +576,7 @@ CoreDescriptor();
 // CALANDRIA DETAILER //
 
 const CalandriaProps = [
-  new Property("Inner Bounds", "red", ()=>{return roundTo(CMtoInch(CalandriaSizeCM),2)}).suff("Inches")
+  new Property("Inner Bounds", "red", ()=>{return CMToInches(Qd(CalandriaSizeCM)).toPrecision(2)}).suff("Inches")
 ]
 const CalandriaDetailer = new Detailer("Calandria", "yel").defDesc("The shell of the reactor.").defProps(CalandriaProps);
 
@@ -802,7 +767,7 @@ for (let i = 1; i < FuelColumns; i++) {
   Clone.style.display = "block";
   
   const Props = [
-    new Property("Insertion", "red", ()=>{return roundTo(Clone.__Insertion, 2)})
+    new Property("Insertion", "red", ()=>{return Qd(Clone.__Insertion).toPrecision(2)})
   ];
   const CloneDetailer = new Detailer("Adjuster Rod", "yel").defExtras("Boron rods are inserted into the reactor between fuel to limit "+Neutron()+" flux.").defProps(Props).backstepA("minor");
   Clone.Detailer = CloneDetailer;
@@ -827,7 +792,7 @@ for (let i = 1; i < FuelLayers; i++) {
   Clone.style.display = "block";
   
   const Props = [
-    new Property("Insertion", "red", ()=>{return roundTo(Clone.__Insertion, 2)})
+    new Property("Insertion", "red", ()=>{return Qd(Clone.__Insertion).toPrecision(2)})
   ];
   const CloneDetailer = new Detailer("Adjuster Rod", "yel").defExtras("Boron rods are inserted into the reactor between fuel to limit "+Neutron()+" flux.").defProps(Props).backstepA("minor");
   Clone.Detailer = CloneDetailer;
@@ -906,7 +871,7 @@ for (let x = 0; x < FuelColumns; x++) {
     
     const FuelProps = [
       new Property("Type", "red", ()=>{return Fuel.__Type}),
-      new Property("Weight", "red", ()=>{return roundTo(FuelCylinderKG*(+PoundFactor),2)}).suff("LBS"),
+      new Property("Weight", "red", ()=>{return KGToPound(Qd(FuelCylinderKG)).toPrecision(2)}).suff("LBS"),
       new Property("Heat Units", "nal", ()=>{return Fuel.__Heat}).internal(),
       new Property("NFL", "nal", ()=>{return Fuel.__NeutronsLastFrame}).internal(),
       new Paragraph("NU consists of 99.3% "+_p("U238","U238")+" and 0.7% "+_p("U235", "U235")+".").extra(),
@@ -979,13 +944,13 @@ function RecalcTime(output) {
 }
 
 function MainCalculations() {
-  RecalcTime(keys[70]); // output time if f is down
+  RecalcTime(KeysDown["f"]); // output time if f is down
   
-  if (keys[82]) { // output delta if r is down
+  if (KeysDown["r"]) { // output delta if r is down
     console.log(Delta);
   }
   
-  if (keys[69]) { // exit loop if e is down
+  if (KeysDown["e"]) { // exit loop if e is down
     window.clearInterval(Runtime);
     console.warn("Exited");
   } 
@@ -1000,15 +965,12 @@ function MainCalculations() {
         e.NUInit = true;
         e.__Atoms = {};
         const qa = e.__Atoms;
-        e.__Count = NUAtomsInKG*new Decimal((new Decimal(e.__Weight)).div(new Decimal("1000")));
-        qa.U238 = Decimal.mul(e.__Count, new Decimal("0.993"));
-        qa.U235 = Decimal.mul(e.__Count, new Decimal("0.007"));
-        const sz = new Decimal(0);
-        qa.U239 = sz;
-        qa.Np239 = sz;
-        qa.Pu239 = sz;
-        qa.SatanicWasteProducts = {}
-        sz = null;
+        e.__Count = GenericFuels["NaturalUranium"].AtomsInKG*Qd((Qd(e.__Weight)).div(Qd("1000")));
+        qa.U238 = Decimal.mul(e.__Count, Qd("0.993"));
+        qa.U235 = Decimal.mul(e.__Count, Qd("0.007"));
+        qa.U239 = Zero;
+        qa.Np239 = Zero;
+        qa.Pu239 = Zero;
       }
       // 1000 total 
       // 900 U238
