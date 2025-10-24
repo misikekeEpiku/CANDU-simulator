@@ -162,19 +162,19 @@ body {
     font-family: 'CMU Serif Roman';
     font-style: normal;
     font-weight: normal;
-    src: url('https://github.com/AustinR2028/codepen-textures/blob/main/cmunrm.woff') format('woff');
+    src: url('./font/ComputerModern.woff') format('woff');
 }
 
 @font-face {
    font-family: 'XITS Math';
    font-weight: normal;
    font-style: normal;
-   src: url("https://github.com/AustinR2028/codepen-textures/blob/main/xits-math.otf") format("otf");
+   src: url("./font/XITSMath.otf") format("otf");
 }
 
 @font-face {
     font-family: 'Noto Emoji';
     font-style: normal;
     font-weight: normal;
-    src: url('https://github.com/AustinR2028/codepen-textures/blob/main/NotoEmoji-VariableFont_wght.ttf') format('ttf');
+    src: url('./font/NotoEmoji.ttf') format('ttf');
 }

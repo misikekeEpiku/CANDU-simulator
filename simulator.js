@@ -7,8 +7,6 @@ rod selection and individual managing
 ^ change insertion by number
 ^ fix rod (toggle)
 
-some kind of heat venting
-
 bulk control rod managing
 ^ color groups (red, blue, green, purple)
 ^ bulk change insertion
@@ -70,6 +68,35 @@ const FuelCylinderHeightCM = (FuelCylinderLength/DPCM); // cm
 const FuelCylinderLengthCM = (FuelCylinderDiameter/DPCM); // cm
 const FuelCylinderArea = (+pi) * Math.pow(FuelCylinderLengthCM/2, 2) * FuelCylinderHeightCM;
 
+<<<<<<< HEAD
+=======
+
+
+const GenericFuels = {
+  NaturalUranium: {
+    U238: Qd("0.99275"),
+    U235: Qd("0.00720"),
+    U234: Qd("0.00005"),
+    Density: Qd("19.05"),
+    AtomsInKG: Qd("1.15e24")
+  }
+}
+
+const ColorDict = {
+  yel:"#ffff00ff",
+  dark:"#9a9a9aff",
+  CellInnerLight:"#3d3d3dff",
+  CellDark:"#252525ff",
+  NUInnerLight:"#52ba4cff",
+  NUDark:"#3d9339ff",
+  bal:"#000000ff",
+  U238:"#00bb06ff",
+  U235:"#dfcc00ff",
+  nal:"#ffa185ff", // color used for internal styling
+  mel:"#7b0101ff" // color used for internal styling
+}
+
+>>>>>>> ae353ce1a49e7deee33aa2a1451f768da44f0eee
 const FuelCylinderRadiusCM = FuelCylinderDiameter/2/DPCM;
 const FuelCylinderGrams = FuelCylinderArea*(GenericFuels[Fuel].Density); // g
 const FuelCylinderKG = FuelCylinderGrams/1000*(+KiloToPoundFactor);
