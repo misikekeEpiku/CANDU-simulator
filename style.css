@@ -162,19 +162,19 @@ body {
     font-family: 'CMU Serif Roman';
     font-style: normal;
     font-weight: normal;
-    src: url('./font/ComputerModern.woff') format('woff');
+    src: url("./Fonts/ComputerModern.woff") format('woff');
 }
 
 @font-face {
    font-family: 'XITS Math';
    font-weight: normal;
    font-style: normal;
-   src: url("./font/XITSMath.otf") format("otf");
+   src: url("./Fonts/XITSMath.otf") format("otf");
 }
 
 @font-face {
     font-family: 'Noto Emoji';
     font-style: normal;
     font-weight: normal;
-    src: url('./font/NotoEmoji.ttf') format('ttf');
+    src: url('./Fonts/NotoEmoji.ttf') format('ttf');
 }
