@@ -1,0 +1,180 @@
+body {
+  margin: 0px;
+  padding: 0px;
+}
+#info {
+  position: absolute;
+  background-color: black;
+  color: white;
+  user-select: none;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  border: 2px solid #354571;
+  z-index: 100;
+}
+#ContainerMain {
+  background-color: rgba(50,50,50,1);
+  margin: 10px;
+  padding: 0px;
+  height: 450px;
+  width: 450px;
+}
+#CoreContainer {
+  position: relative;
+  top: 25px;
+  left: 25px;
+  height: 300px;
+  width: 300px;
+}
+#Calandria {
+  position: relative;
+  background-color: #D8A600;
+  padding: 0px;
+  top: 50px;
+  left: 50px;
+  height: 350px;
+  width: 350px;
+}
+#ControlPanel {
+  padding-left: 10px;
+}
+
+.ila {
+  display: inline-block;
+  border: 2px inset #292929;
+}
+.fup {
+  font-size: 10px;
+}
+.lhp {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.lpp {
+  margin-top: 0;
+}
+.plp {
+  margin-left: 5px;
+}
+.CtrlRod {
+  position: absolute;
+  height: 300px;
+  background-image: linear-gradient(to top, lime, red);
+  width: 8px;
+  z-index:2;
+}
+.FuelLayer { /*this will be updated to a horizontal control rod*/
+  position: absolute;
+  height: 10px; 
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  background-image: linear-gradient(to right, lime, red);
+}
+.MeterNotch {
+  position: absolute;
+  height: 6px;
+  width: 100%;
+  left: 0px;
+  top: 98%;
+  background-color: black;
+}
+.MeterNotchHorizontal {
+  position: absolute;
+  width: 6px;
+  height: 100%;
+  top: 0px;
+  right: 98%;
+  background-color: black;
+}
+.Neutron {
+  position: absolute;
+  border-radius: 50%;
+  background-image: radial-gradient(#6078BF 0%, #2449B8 40%);
+  background-position: bottom 15% left 70%;
+  background-size: 170% 170%;
+}
+.particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.pni {
+  display: inline-block;
+}
+*{
+  font-family: Consolas, "Lucida Console", monospace;
+}
+.Math {
+  font-family: "XITS Math", "CMU Serif Roman", "Cambria Math", "Noto Sans Math";
+  font-style: italic;
+}
+
+.info-txt {
+  font-size: 12px;
+  line-height: 0.825em;
+}
+
+.rainbow-text {
+  background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+  background-clip: text;
+  background-size: 800% 800%;
+  color: transparent;
+  animation: rainbow 8s ease infinite;
+}
+
+.NU {
+  background-color: #52BA4C;
+}
+.HeavyWater {
+  background-color: rgb(80,80,255);
+}
+.Water {
+  background-color: rgb(120,120,255);
+}
+
+.FuelCylinder {
+  position: absolute;
+  border-radius: 4px;
+  height: 8px;
+  top: 1px;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 25%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@font-face {
+    font-family: 'CMU Serif Roman';
+    font-style: normal;
+    font-weight: normal;
+    src: url("./Fonts/ComputerModern.woff") format('woff');
+}
+
+@font-face {
+   font-family: 'XITS Math';
+   font-weight: normal;
+   font-style: normal;
+   src: url("./Fonts/XITSMath.otf") format("otf");
+}
+
+@font-face {
+    font-family: 'Noto Emoji';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./Fonts/NotoEmoji.ttf') format('ttf');
+}
